@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>viewer3Dr</title>
+    <title>3D Viewer</title>
     <style>
       body {
         margin: 0;
-        background-color: #1a1a1a; /* Fond sombre */
+        background-color: #111;
         overflow: hidden;
       }
       canvas {
@@ -15,31 +15,45 @@
     </style>
   </head>
   <body>
-   <script type="module">
-  import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
-  import { GLTFLoader } from 'https://cdn.skypack.dev/three/examples/jsm/loaders/GLTFLoader.js';
+    <script type="module">
+      import * as THREE from 'https://unpkg.com/three@0.150.1/build/three.module.js';
+      import { GLTFLoader } from 'https://unpkg.com/three@0.150.1/examples/jsm/loaders/GLTFLoader.js';
+      import { OrbitControls } from 'https://unpkg.com/three@0.150.1/examples/jsm/controls/OrbitControls.js';
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x1a1a1a); // 🎨 FOND PLUS FONCÉ
-  document.body.appendChild(renderer.domElement);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-  const loader = new GLTFLoader();
-  loader.load('vue_pour_site_2.glb', function (gltf) {
-    scene.add(gltf.scene);
-    renderer.render(scene, camera);
-  }, undefined, function (error) {
-    console.error('Erreur de chargement GLB :', error);
-  });
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
 
-  camera.position.z = 5;
-  function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  }
-  animate();
-</script>
+      const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
+      scene.add(light);
+
+      const loader = new GLTFLoader();
+      loader.load('/vue_pour_site_2.glb', function (gltf) {
+        scene.add(gltf.scene);
+        gltf.scene.position.set(0, 0, 0);
+        animate();
+      }, undefined, function (error) {
+        console.error('Erreur de chargement GLB:', error);
+      });
+
+      camera.position.z = 2;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
   </body>
 </html>
