@@ -3,11 +3,10 @@
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOWALL"
-        }
+        { "key": "X-Frame-Options", "value": "ALLOWALL" }
       ]
     }
   ]
 }
+
+
