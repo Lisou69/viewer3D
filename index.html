@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Viewer 3D</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <style>
-      body {
-        margin: 0;
-        background-color: #121212; /* FOND FONCÉ */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      model-viewer {
-        width: 80vw;
-        height: 80vh;
-      }
-    </style>
-  </head>
-  <body>
-    <model-viewer 
-      src="/vue_pour_site_2.glb"
-      alt="Modèle 3D"
-      auto-rotate 
-      camera-controls 
-      background-color="#121212"
-      ar
-      exposure="0.9"
-      shadow-intensity="1"
-    ></model-viewer>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>3D Model Viewer</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #111; /* Fond plus foncé */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    model-viewer {
+      width: 90vw;
+      height: 90vh;
+    }
+  </style>
+</head>
+<body>
+  <model-viewer src="vue_pour_site_2.glb"
+                alt="3D viewer"
+                auto-rotate
+                camera-controls
+                background-color="#111"
+                exposure="1.0"
+                shadow-intensity="1"
+                ar>
+  </model-viewer>
+</body>
 </html>
