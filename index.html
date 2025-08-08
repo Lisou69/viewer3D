@@ -1,31 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Viewer3D</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      background-color: #111; /* Fond plus foncé */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    model-viewer {
-      width: 90vw;
-      height: 90vh;
-    }
-  </style>
-</head>
-<body>
-  <model-viewer
-    src="./vue_pour_site_2.glb"
-    alt="Machine industrielle 3D"
-    auto-rotate
-    camera-controls
-    background-color="#111">
-  </model-viewer>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Viewer 3D</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #1a1a1a;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from 'https://cdn.skypack.dev/three@0.152.2';
+      import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.152.2/examples/jsm/loaders/GLTFLoader.js';
+      import { OrbitControls } from 'https://cdn.skypack.dev/three@0.152.2/examples/jsm/controls/OrbitControls.js';
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(10, 10, 10).normalize();
+      scene.add(light);
+
+      const loader = new GLTFLoader();
+      loader.load('./vue_pour_site_2.glb', function (gltf) {
+        scene.add(gltf.scene);
+        camera.position.set(2, 2, 4);
+        controls.update();
+      }, undefined, function (error) {
+        console.error('Erreur de chargement du GLB:', error);
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+  </body>
 </html>
