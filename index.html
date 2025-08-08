@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>3D Model Viewer</title>
+  <meta charset="UTF-8" />
+  <title>Viewer3D</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     body {
@@ -20,14 +20,12 @@
   </style>
 </head>
 <body>
-  <model-viewer src="vue_pour_site_2.glb"
-                alt="3D viewer"
-                auto-rotate
-                camera-controls
-                background-color="#111"
-                exposure="1.0"
-                shadow-intensity="1"
-                ar>
+  <model-viewer
+    src="./vue_pour_site_2.glb"
+    alt="Machine industrielle 3D"
+    auto-rotate
+    camera-controls
+    background-color="#111">
   </model-viewer>
 </body>
 </html>
